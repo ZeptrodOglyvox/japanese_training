@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="node_modules\jquery\dist\jquery.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/characters.js" defer></script>
+    <script src="js/main.js" defer></script>
+</head>
+<body style="background-color: aquamarine;">
+    <h1>The Best Japanase Training You've Seen in Your Life</h1>
+    <div class="outer-container">
+        <div class="container">
+            <p id="current" style="color: red;"></p>
+            <p id="answer"></p>
+        </div>
+        <div class="checkboxes">
+            <h2>Choose hiragana groups:</h2>
+            <button id="select-all">Select All</button>
+            <button id="select-none">Select None</button>
+        </div>
+    </div>
+    <div id="length-container">
+        <span><strong>Length: &nbsp;</strong></span>
+        <span id="length-indicator">1</span>
+        <button id="length-plus">+</button>
+        <button id="length-minus">-</button>
+    </div>
+
+    <button id="invert">Hiragana Training</button>
+</body>
+</html>
