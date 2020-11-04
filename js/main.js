@@ -86,6 +86,6 @@ $('#length-minus').on('click', function() {
 
 // Invert 
 $('#invert').on('click', function(){
-    inverted = true;
-    this.innerHTML = 'Reading Training'; 
-});
+    inverted = !inverted;
+    this.innerHTML = `${inverted ? 'Reading' : 'Hiragana'} Training`; 
+}).on('keyup', function(evt){evt.preventDefault();});
