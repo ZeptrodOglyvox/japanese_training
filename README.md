@@ -1,0 +1,1 @@
+Published at https://zeptrodoglyvox.github.io/japanese_training/
