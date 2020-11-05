@@ -1,3 +1,5 @@
+import './characters'
+
 // Create checkboxes
 for (const charset in hiragana) {
     const cb = $(`

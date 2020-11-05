@@ -1,4 +1,4 @@
-const hiragana = {
+hiragana = {
 'vowel' : {
     'a':'あ',
     'i':'い',
