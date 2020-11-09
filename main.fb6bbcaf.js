@@ -117,74 +117,190 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
-
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
+})({"js/characters.js":[function(require,module,exports) {
+hiragana = {
+  'vowel': {
+    'a': 'あ',
+    'i': 'い',
+    'u': 'う',
+    'e': 'え',
+    'o': 'お'
+  },
+  'k': {
+    'ka': 'か',
+    'ki': 'き',
+    'ku': 'く',
+    'ke': 'け',
+    'ko': 'こ'
+  },
+  's': {
+    'sa': 'さ',
+    'shi': 'し',
+    'su': 'す',
+    'se': 'せ',
+    'so': 'そ'
+  },
+  'h': {
+    'ha': 'は',
+    'hi': 'ひ',
+    'fu': 'ふ',
+    'he': 'へ',
+    'ho': 'ほ'
+  },
+  't': {
+    'ta': 'た',
+    'chi': 'ち',
+    'tsu': 'つ',
+    'te': 'て',
+    'to': 'と'
+  },
+  'n': {
+    'na': 'な',
+    'ni': 'に',
+    'nu': 'ぬ',
+    'ne': 'ね',
+    'no': 'の'
+  },
+  'm': {
+    'ma': 'ま',
+    'mi': 'み',
+    'mu': 'む',
+    'me': 'め',
+    'mo': 'も'
+  },
+  'r': {
+    'ra': 'ら',
+    'ri': 'り',
+    'ru': 'る',
+    're': 'れ',
+    'ro': 'ろ'
+  },
+  'y': {
+    'ya': 'や',
+    'yu': 'ゆ',
+    'yo': 'よ'
+  },
+  'w': {
+    'wa': 'わ',
+    'wo': 'を',
+    'n': 'ん'
   }
+};
+},{}],"js/main.js":[function(require,module,exports) {
+"use strict";
 
-  return bundleURL;
+require("./characters");
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+// Create checkboxes
+for (var charset in hiragana) {
+  var cb = $("\n    <div>\n    <input type=\"checkbox\" id=\"".concat(charset, "\" name=\"").concat(charset, "\" checked >\n    <label for=\"").concat(charset, "\">").concat(charset, "</label>\n    </div>\n    ")).on('keyup', function (evt) {
+    evt.preventDefault();
+  });
+  $('.checkboxes').append(cb);
 }
 
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
+var checkboxes = $('input[type="checkbox"]');
+var inverted = false;
+
+function invertObj(obj) {
+  return Object.keys(obj).reduce(function (acc, k) {
+    acc[[obj[k]]] = k;
+    return acc;
+  }, {});
+}
+
+function getPool() {
+  var pool = {};
+
+  var _iterator = _createForOfIteratorHelper(checkboxes),
+      _step;
+
   try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var _cb = _step.value;
 
-    if (matches) {
-      return getBaseURL(matches[0]);
-    }
-  }
-
-  return '/';
-}
-
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
-}
-
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
-
-function updateLink(link) {
-  var newLink = link.cloneNode();
-
-  newLink.onload = function () {
-    link.remove();
-  };
-
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
-
-var cssTimeout = null;
-
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
-  }
-
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
+      if (_cb.checked) {
+        Object.assign(pool, hiragana[_cb.id]);
       }
     }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
 
-    cssTimeout = null;
-  }, 50);
+  if (inverted) return invertObj(pool);else return pool;
+} // Exercise logic
+
+
+var length = 1;
+var counter = 0;
+
+function choose(choices) {
+  var n = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  var ret = [];
+
+  for (var i = 0; i < n; i++) {
+    var index = Math.floor(Math.random() * choices.length);
+    ret.push(choices[index]);
+  }
+
+  return ret;
 }
 
-module.exports = reloadCSS;
-},{"./bundle-url":"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+var previous = document.getElementById('previous');
+var answer = document.getElementById('answer');
+var current = document.getElementById('current');
+var chars = choose(Object.keys(getPool()), length);
+current.innerHTML = chars.join('');
+document.addEventListener('keydown', function () {
+  var pool = getPool();
+  answer.innerHTML = "".concat(chars.map(function (x) {
+    return pool[x];
+  }).join(''), " &nbsp; ").concat(chars.join(''));
+  chars = choose(Object.keys(pool), length);
+  current.innerHTML = chars.join('');
+  counter = counter + 1;
+  $('#counter-value').text(counter);
+}); // Select Buttons
+
+$('#select-all').on('click', function () {
+  checkboxes.each(function () {
+    this.checked = true;
+  });
+});
+$('#select-none').on('click', function () {
+  checkboxes.each(function () {
+    this.checked = false;
+  });
+}); // Manage Length
+
+$('#length-plus').on('click', function () {
+  length = Math.min(length + 1, 9);
+  $('#length-indicator').text(length);
+}).on('keyup', function (evt) {
+  evt.preventDefault();
+});
+$('#length-minus').on('click', function () {
+  length = Math.max(length - 1, 1);
+  $('#length-indicator').text(length);
+}).on('keyup', function (evt) {
+  evt.preventDefault();
+}); // Invert 
+
+$('#invert').on('click', function () {
+  inverted = !inverted;
+  this.innerHTML = "".concat(inverted ? 'Reading' : 'Hiragana', " Training");
+}).on('keyup', function (evt) {
+  evt.preventDefault();
+});
+},{"./characters":"js/characters.js"}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -212,7 +328,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60287" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61149" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -388,5 +504,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
-//# sourceMappingURL=/index.js.map
+},{}]},{},["../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","js/main.js"], null)
+//# sourceMappingURL=/main.fb6bbcaf.js.map
