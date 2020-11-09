@@ -4,8 +4,8 @@ import './characters'
 for (const charset in hiragana) {
     const cb = $(`
     <div>
-    <label for="${charset}">${charset}</label>
     <input type="checkbox" id="${charset}" name="${charset}" checked >
+    <label for="${charset}">${charset}</label>
     </div>
     `)
     .on('keyup', function(evt){evt.preventDefault();});
@@ -37,7 +37,8 @@ function getPool() {
 }
 
 // Exercise logic
-let length = 1
+let length = 1;
+let counter = 0;
 
 function choose(choices, n=1) {
     let ret = [];
@@ -65,6 +66,9 @@ document.addEventListener('keydown', () => {
 
     chars = choose(Object.keys(pool), length);
     current.innerHTML = chars.join('');
+
+    counter = counter + 1;
+    $('#counter-value').text(counter);
 })
 
 // Select Buttons
